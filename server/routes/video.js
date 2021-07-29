@@ -3,8 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 var ffmpeg = require('fluent-ffmpeg');
 
-//const { Video } = require("../models/Video");
-//const { auth } = require("../middleware/auth");
+const { Video } = require("../models/Video");
+const { auth } = require("../middleware/auth");
 
 
 //STORAGE MULTER CONFIG
@@ -42,6 +42,19 @@ router.post('/uploadfiles', (req, res) => { //index.js를 거쳐오므로 '/api/
         return res.json({success: true, filePath: res.req.file.path, fileName: res.req.file.filename})
     })
 })
+
+router.post('/uploadVideo', (req, res) => {
+    //비디오 정보들을 저장
+    const video = new Video(req.body) //client의 모든 variables가 담겨져있음
+
+     //mongoDB에 저장(mongoDB-Cluster-Collenctions에서 확인 가능)
+    video.save((err, doc)=>{
+        if(err) return res.json({success: true, err: err})
+        res.status(200).json({success: true})
+    })
+})
+
+
 
 router.post('/thumbnail', (req, res) => { 
     //비디오 러닝타임 가져오기

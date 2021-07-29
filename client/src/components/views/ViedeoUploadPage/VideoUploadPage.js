@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Typography, Button, Form, message, Input, Icon} from 'antd';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
+import { useSelector } from 'react-redux';
 
 const { TextArea }=Input;
 const { Title } = Typography;
@@ -18,7 +19,8 @@ const CategoryOptions=[
     {value: 3, label: "Pets & Animals"}
 ]
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
+    const user = useSelector(state=> state.user); //Redux DevTools에서 보이는 State의 user 정보를 가져옴
     const [VideoTitle, setVideoTitle] = useState('')
     const [Description, setDescription] = useState('')
     const [Private, setPrivate] = useState(0) //Private:0, Public: 1
@@ -36,7 +38,7 @@ function VideoUploadPage() {
         setDescription(e.currentTarget.value)
     }
 
-    
+
     const onPrivateChange=(e)=>{
         setPrivate(e.currentTarget.value)
     }
@@ -79,6 +81,36 @@ function VideoUploadPage() {
                     }
                 })
 
+            }else{
+                alert('비디오 업로드 실패')
+            }
+        })
+    }
+
+    const onSubmit =(e)=>{
+        e.preventDefault();
+        const variables={
+            writer: user.userData._id,
+            title: VideoTitle,
+            description: Description,
+            privacy: Private,
+            filePath: FilePath,
+            category: Category,
+            duration: Duration,
+            thumbnail: ThumbnailPath,
+        }
+
+        axios.post('/api/video/uploadVideo', variables)
+        .then(response => {
+            if(response.data.success){
+                console.log(response.data)
+
+                //성공메세지를 띄워주고 3초후에 LandingPage로 보내줌.
+                message.success('성공적으로 업로드 완료');
+                setTimeout(()=>{
+                    props.history.push('/')
+                }, 3000);
+                
 
             }else{
                 alert('비디오 업로드 실패')
@@ -92,13 +124,13 @@ function VideoUploadPage() {
                 <Title level={2}> Upload Video</Title>
             </div>
 
-            <Form onSubmit>
+            <Form onSubmit={onSubmit}>
                 <div style={{display: 'flex', justifyContent:'space-between'}}>
 
                     {/* Drop zone */}
                     <Dropzone
                     onDrop={onDrop}
-                    multiple={false} //한번에 파일을 하나만 올리면 false
+                    multiple={false} //한번에 파일을 하나만 올리면 false 
                     maxSize={90000000000}
                     >
                         {({ getRootProps, getInputProps})=>(
@@ -159,7 +191,7 @@ function VideoUploadPage() {
                 <br/>
                 <br/>
 
-                <Button type="primary" size="large" onClick>
+                <Button type="primary" size="large" onClick={onSubmit}>
                     Submit
                 </Button>
 
