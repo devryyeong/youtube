@@ -54,6 +54,17 @@ router.post('/uploadVideo', (req, res) => {
     })
 })
 
+router.get('/getVideos', (req, res) => {
+    //비디오 정보들을 DB에서 가져와서 client에 보냄 
+    Video.find()
+        .populate('writer') //ObjectId를 기반으로 writer의 다른 collection의 정보들을 함께 담아서 출력
+        .exec((err, videos)=>{
+            if(err) return res.status(400).send(err);
+            res.status(200).json({success: true, videos})
+        })
+    
+})
+
 
 
 router.post('/thumbnail', (req, res) => { 
