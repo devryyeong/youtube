@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Typography, Button, Form, message, Input, Icon} from 'antd';
-import Axios from 'axios';
+import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
 const { TextArea }=Input;
@@ -24,6 +24,10 @@ function VideoUploadPage() {
     const [Private, setPrivate] = useState(0) //Private:0, Public: 1
     const [Category, setCategory] = useState("Film & Animation")
 
+    const [FilePath, setFilePath] = useState('')
+    const [Duration, setDuration] = useState('')
+    const [ThumbnailPath, setThumbnailPath] = useState('')
+
     const onTitleChange=(e)=>{
         setVideoTitle(e.currentTarget.value)
     }
@@ -43,7 +47,7 @@ function VideoUploadPage() {
 
 
     const onDrop=(files)=>{
-        let formData=new FormData
+        let formData=new FormData();
         const config={
             header: {'content-type': 'multipart/form-data'}
         }
@@ -51,10 +55,31 @@ function VideoUploadPage() {
         formData.append("file", files[0]) //배열 형태로 가져옴
         
         //file 정보를 서버로 보냄(index.js로 감.)
-        Axios.post('/api/video/uploadfiles', formData, config)
+        axios.post('/api/video/uploadfiles', formData, config)
         .then(response=>{
             if(response.data.success){
                 console.log(response.data)
+                
+                let variable={
+                    filePath: response.data.filePath,
+                    fileName: response.data.fileName
+                }
+
+                setFilePath(response.data.url)
+
+                axios.post('/api/video/thumbnail', variable)
+                .then(response=>{
+                    if(response.data.success){
+                        console.log(response.data)
+
+                        setDuration(response.data.fileDuration)
+                        setThumbnailPath(response.data.url)
+                    }else{
+                        alert('썸네일 생성 실패')
+                    }
+                })
+
+
             }else{
                 alert('비디오 업로드 실패')
             }
@@ -74,7 +99,7 @@ function VideoUploadPage() {
                     <Dropzone
                     onDrop={onDrop}
                     multiple={false} //한번에 파일을 하나만 올리면 false
-                    maxSize={1000000}
+                    maxSize={90000000000}
                     >
                         {({ getRootProps, getInputProps})=>(
                             <div style={{width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex',
@@ -88,9 +113,13 @@ function VideoUploadPage() {
                     </Dropzone>
 
                     {/* Thumbnail */}
-                    <div>
-                        <img src alt />
-                    </div>
+                    {/* Thumbnail Path가 있을 때만 렌더링되도록 */}
+                    {ThumbnailPath &&
+                        <div>
+                            <img src={`http://localhost:5000/${ThumbnailPath}`} alt="thumbnail" />
+                        </div>
+                    }
+
                 </div>
 
                 <br/>
