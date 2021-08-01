@@ -22,7 +22,7 @@ function LandingPage() {
                 alert('비디오 가져오기 실패')
             }
         })
-    },[])
+    },[]);
 
     //map(): //각 배열의 요소를 돌면서 인자로 전달된 함수를 사용하여 처리 된 새로운 결과를 새로운 배열에 담아 반환
     const renderCards = Video.map((video, index) => { 
@@ -32,14 +32,15 @@ function LandingPage() {
 
         return <Col lg={6} md={8} xs={24}>
             {/* video당 각각 하나의 페이지이므로 link를 걸음 */}
-            <a href={`/video/post/${video._id}`}> 
-                <div styles={{position: 'relative'}}>
+            <div styles={{position: 'relative'}}>
+                <a href={`/video/${video._id}`} >
                     <img style={{width: '100%'}} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
                     <div className="duration">
                         <span> {minutes} : {seconds} </span>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+            
 
             <br/>
             {/* Avatar: user의 이미지 */}

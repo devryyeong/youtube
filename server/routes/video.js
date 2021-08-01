@@ -66,11 +66,23 @@ router.get('/getVideos', (req, res) => {
 })
 
 
+router.post('/getVideoDetail', (req, res) => {
+    //client가 보낸 videoId를 이용해 비디오 정보를 가져옴
+    Video.findOne({ "_id" : req.body.videoId})
+        .populate('writer')
+        .exec((err, videoDetail)=>{
+            if(err) return res.status(400).send(err);
+            return  res.status(200).json({success: true, videoDetail})
+        })
+})
+
+
+
 
 router.post('/thumbnail', (req, res) => { 
     //비디오 러닝타임 가져오기
     //ffprobe:자동으로 metadata를 가져옴
-    let filePath="";
+    let filePath ="";
     let fileDuration="";
 
     ffmpeg.ffprobe(req.body.filePath, function(err, metadata){
@@ -82,13 +94,14 @@ router.post('/thumbnail', (req, res) => {
     //썸네일 생성
     ffmpeg(req.body.filePath) //client에서 온 비디오 저장 경로를 가지고,
     .on('filenames', function (filenames) { //썸네일 파일 이름 생성
-        console.log('Will generate '+filenames.join(', '))
+        console.log('Will generate '+ filenames.join(', '))
         console.log(filenames)
-        filePath="uploads/thumbnails/"+filenames[0] 
+        filePath ="uploads/thumbnails/" + filenames[0] 
+        
     })
     .on('end', function () { //생성한 썸네일로 뭘 할것인지
         console.log('Screenshots taken');
-        return res.json({success: true, url: filePath, fileDuration: fileDuration});
+        return res.json({success: true, url : filePath , fileDuration: fileDuration});
     })
     .on('error', function (err) { //에러처리
         console.log(err);
