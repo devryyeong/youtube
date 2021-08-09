@@ -40,7 +40,6 @@ function LandingPage() {
                     </div>
                 </a>
             </div>
-            
 
             <br/>
             {/* Avatar: user의 이미지 */}

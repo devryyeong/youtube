@@ -8,19 +8,19 @@ const videoSchema = mongoose.Schema({
     },
     title: { 
         type: String,
-        maxlength: 50
+        maxlength: 50,
     },
     description: {
-        type: String
+        type: String,
     },
     privacy: { //0:privacy, 1:public
-        type: Number
+        type: Number,
     },
     filePath: {
-        type: String
+        type: String,
     },
     category: {
-        type: String
+        type: String,
     },
     views: {
         type: Number,

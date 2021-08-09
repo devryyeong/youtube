@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 
 
 //STORAGE MULTER CONFIG
-let storage = multer.diskStorage({
+var storage = multer.diskStorage({
     //파일 저장할 위치 지정
     destination: (req, file, cb)=>{
         cb(null, "uploads/");
@@ -72,7 +72,7 @@ router.post('/getVideoDetail', (req, res) => {
         .populate('writer')
         .exec((err, videoDetail)=>{
             if(err) return res.status(400).send(err);
-            return  res.status(200).json({success: true, videoDetail})
+            res.status(200).json({success: true, videoDetail})
         })
 })
 

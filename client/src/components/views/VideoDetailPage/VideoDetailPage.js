@@ -29,12 +29,13 @@ function VideoDetailPage(props) {
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
                     <div style={{width:'100%', padding: '3rem 4rem'}}>
-                        <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} controls></video>
+                        <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail?.filePath}`} controls autoplay/>
+                        
                         <List.Item
-                            actions
+                            actions 
                         >
                             <List.Item.Meta
-                                avatar={<Avatar src={VideoDetail.writer.image} />}
+                                avatar={ <Avatar src={VideoDetail.writer.image} /> }
                                 title={VideoDetail.writer.name}
                                 description={VideoDetail.description}
                             />
