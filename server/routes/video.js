@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 
 
 //STORAGE MULTER CONFIG
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
     //파일 저장할 위치 지정
     destination: (req, file, cb)=>{
         cb(null, "uploads/");
@@ -69,10 +69,13 @@ router.get('/getVideos', (req, res) => {
 router.post('/getVideoDetail', (req, res) => {
     //client가 보낸 videoId를 이용해 비디오 정보를 가져옴
     Video.findOne({ "_id" : req.body.videoId})
-        .populate('writer')
+        .populate('writer') //writer의 Id이외의 모든 정보를 가져오기 위해 populate
         .exec((err, videoDetail)=>{
             if(err) return res.status(400).send(err);
-            res.status(200).json({success: true, videoDetail})
+            else {
+                return res.status(200).json({success: true, videoDetail})
+                console.log('비디오디테일?: '+videoDetail)
+            }
         })
 })
 

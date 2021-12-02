@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, List, Avatar } from 'antd';
 import axios from 'axios';
+import SideVideo from './Sections/SideVideo';
 
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId
+    
     const variable = { videoId: videoId }
-
     const [VideoDetail, setVideoDetail] = useState([])
 
 
+    //DB에 videoId를 요청하기 위해 useEffect로 axios post요청을 보내자
     useEffect(() => {
         axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
@@ -23,13 +25,13 @@ function VideoDetailPage(props) {
     }, [])
 
 
-    //VideoDetail.writer가 있으면 먼저 렌더링->image 렌더링
+    //VideoDetail.writer가 있으면 먼저 렌더링한 후, image 렌더링
     if(VideoDetail.writer){
         return (
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
                     <div style={{width:'100%', padding: '3rem 4rem'}}>
-                        <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail?.filePath}`} controls autoplay/>
+                        <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} controls autoplay/>
                         
                         <List.Item
                             actions 
@@ -48,7 +50,7 @@ function VideoDetailPage(props) {
 
                 </Col>
                 <Col lg={6} xs={24}>
-                    Side Videos
+                    <SideVideo />
                 </Col>
             </Row>
         )
