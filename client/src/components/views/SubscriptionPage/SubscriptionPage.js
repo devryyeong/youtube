@@ -18,7 +18,6 @@ function SubscriptionPage() {
         axios.post('/api/video/getSubscriptionVideos', subcriptionVariables)
         .then(response => {
             if(response.data.success){
-                console.log('콘솔'+response.data)
                 setVideo(response.data.videos)
             }else{
                 alert('비디오 가져오기 실패')
