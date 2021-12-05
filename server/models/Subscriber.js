@@ -6,7 +6,7 @@ const subscriberSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    useFrom: {
+    userFrom: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }

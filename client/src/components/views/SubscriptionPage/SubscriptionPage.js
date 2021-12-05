@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { FaCode } from "react-icons/fa";
-import { Card, Icon, Avatar, Col, Typography, Row} from 'antd';
+import { Card, Avatar, Col, Typography, Row} from 'antd';
 import moment from 'moment';
 
 const { Title } = Typography;
@@ -18,7 +18,7 @@ function SubscriptionPage() {
         axios.post('/api/video/getSubscriptionVideos', subcriptionVariables)
         .then(response => {
             if(response.data.success){
-                console.log(response.data)
+                console.log('콘솔'+response.data)
                 setVideo(response.data.videos)
             }else{
                 alert('비디오 가져오기 실패')
@@ -32,7 +32,7 @@ function SubscriptionPage() {
         var minutes = Math.floor(video.duration / 60);
         var seconds = Math.floor((video.duration - minutes * 60));
 
-        return <Col lg={6} md={8} xs={24}>
+        return <Col key={index} lg={6} md={8} xs={24}>
             {/* video당 각각 하나의 페이지이므로 link를 걸음 */}
             <div styles={{position: 'relative'}}>
                 <a href={`/video/${video._id}`} >

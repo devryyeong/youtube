@@ -13,12 +13,15 @@ const Styled= {
     `
 }
 
+
 function Subscribe(props) {
     const [SubscribeNumber, setSubscribeNumber] = useState(0);
     const [Subscribed, setSubscribed] = useState(false);
+    console.log('초기화'+Subscribed)
+    const subscribedVariable = {userTo: props.userTo, userFrom: localStorage.getItem('userId')}
 
     useEffect(() => {
-        let variable = {userTo: props.userTo}
+        let variable={userTo: props.userTo}
         
         axios.post('/api/subscribe/subscribeNumber', variable)
         .then(response =>{
@@ -31,7 +34,7 @@ function Subscribe(props) {
         
         //내가 이 비디오 업로드한 유저를 구독하는지 정보 가져오기(->내 아이디도 필요함)
         //로그인할 때 임의적으로 userId를 Local Storage에 넣어두었기 때문.
-        let subscribedVariable = {useTo: props.userTo, userFrom: localStorage.getItem('userId')}
+        //let subscribedVariable = {useTo: props.userTo, userFrom: localStorage.getItem('userId')}
 
         axios.post('/api/subscribe/subscribed', subscribedVariable)
         .then(response => {
@@ -44,17 +47,17 @@ function Subscribe(props) {
     }, [])
 
     const onSubscribe=()=>{
-
-        let subscribedVariable={
-            userTo: props.userTo,
-            userFrom: props.userFrom
-        }
+        // const subscribedVariable={
+        //     userTo: props.userTo,
+        //     userFrom: props.userFrom
+        // }
+        
         //이미 구독중이라면
         if(Subscribed){
             axios.post('/api/subscribe/unSubscribe', subscribedVariable)
             .then(response =>{
                 if(response.data.success){
-                    setSubscribeNumber(SubscribeNumber-1)
+                    setSubscribeNumber(SubscribeNumber - 1)
                     setSubscribed(!Subscribed)
                 }else{
                     alert('구독 취소 실패');
@@ -66,7 +69,7 @@ function Subscribe(props) {
             axios.post('/api/subscribe/subscribe', subscribedVariable)
             .then(response =>{
                 if(response.data.success){
-                    setSubscribeNumber(SubscribeNumber+1)
+                    setSubscribeNumber(SubscribeNumber + 1)
                     setSubscribed(!Subscribed)
                 }else{
                     alert('구독 실패');
@@ -76,7 +79,7 @@ function Subscribe(props) {
     }
     
     //새로고침하면 초기화(?)됨ㅠㅠㅠㅠ
-    console.log('숫자가 그냥 증가해벌여'+SubscribeNumber)
+    console.log('띠용'+Subscribed)
     
 
     return (
