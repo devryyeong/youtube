@@ -1,5 +1,9 @@
 # Youtube
-
-* React  
-* Node.js & Express.js  
+---
+## Client
+* React
+* Styled-components
+---
+## Server
+* NodeJS & Express 
 * MongoDB
