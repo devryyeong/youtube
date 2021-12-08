@@ -45,9 +45,9 @@ router.post('/upLike', (req, res)=>{
     let variable = {}
     
     if(req.body.videoId){
-        variable = {videoId: req.body.videoId}
+        variable = {videoId: req.body.videoId, userId: req.body.userId}
     }else{
-        variable = {commentId: req.body.commentId}
+        variable = {commentId: req.body.commentId, userId: req.body.userId}
     }
 
     //Like collection에 클릭 정보를 넣어주고
@@ -56,7 +56,7 @@ router.post('/upLike', (req, res)=>{
         if(err) return res.json({ success: false, err})
 
         //싫어요 버튼이 이미 클릭되어있는 경우 싫어요 1 내려야함
-        Dislike.findByIdAndDelete(variable)
+        Dislike.findOneAndDelete(variable)
         .exec((err, dislikeResult)=>{
             if(err) return res.status(400).json({success:false, err})
             res.status(200).json({success:true})
@@ -68,12 +68,12 @@ router.post('/unLike', (req, res)=>{
     let variable = {}
     
     if(req.body.videoId){
-        variable = {videoId: req.body.videoId}
+        variable = {videoId: req.body.videoId, userId: req.body.userId}
     }else{
-        variable = {commentId: req.body.commentId}
+        variable = {commentId: req.body.commentId, userId: req.body.userId}
     }
 
-    Like.findByIdAndDelete(variable)
+    Like.findOneAndDelete(variable)
     .exec((err, result)=>{
         if(err) return res.status(400).json({success:false, err})
         res.status(200).json({success:true})
@@ -84,9 +84,9 @@ router.post('/upDislike', (req, res)=>{
     let variable = {}
     
     if(req.body.videoId){
-        variable = {videoId: req.body.videoId}
+        variable = {videoId: req.body.videoId, userId: req.body.userId}
     }else{
-        variable = {commentId: req.body.commentId}
+        variable = {commentId: req.body.commentId, userId: req.body.userId}
     }
 
     //Dislike collection에 클릭 정보를 넣어주고
@@ -95,7 +95,7 @@ router.post('/upDislike', (req, res)=>{
         if(err) return res.json({ success: false, err})
 
         //좋아요 버튼이 이미 클릭되어있는 경우 싫어요 1 내려야함
-        Like.findByIdAndDelete(variable)
+        Like.findOneAndDelete(variable)
         .exec((err, likeResult)=>{
             if(err) return res.status(400).json({success:false, err})
             res.status(200).json({success:true})
@@ -107,12 +107,12 @@ router.post('/unDislike', (req, res)=>{
     let variable = {}
     
     if(req.body.videoId){
-        variable = {videoId: req.body.videoId}
+        variable = {videoId: req.body.videoId, userId: req.body.userId}
     }else{
-        variable = {commentId: req.body.commentId}
+        variable = {commentId: req.body.commentId, userId: req.body.userId}
     }
 
-    Dislike.findByIdAndDelete(variable)
+    Dislike.findOneAndDelete(variable)
     .exec((err, result)=>{
         if(err) return res.status(400).json({success:false, err})
         res.status(200).json({success:true})

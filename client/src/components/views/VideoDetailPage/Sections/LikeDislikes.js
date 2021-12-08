@@ -100,15 +100,15 @@ function LikeDislikes(props) {
 
     const onDislike=()=>{
         if(DislikeAction === null){
-            axios.post('/api/dislike/upDislike', variable)
+            axios.post('/api/like/upDislike', variable)
             .then(response =>{
                 if(response.data.success){
                     setDislikes(Dislikes+1)
                     setDislikeAction('disliked')
 
                     //좋아요가 이미 클릭되어있는 경우
-                    if(LikeAction !== null){
-                        setLikes(Dislikes+1)
+                    if(DislikeAction !== null){
+                        setLikes(Likes+1)
                         setLikeAction(null)
                     }
                 }else{
@@ -117,7 +117,7 @@ function LikeDislikes(props) {
             })
         //싫어요 버튼이 이미 클릭되어있는 경우
         }else{
-            axios.post('/api/dislike/unDislike', variable)
+            axios.post('/api/like/unDislike', variable)
             .then(response =>{
                 if(response.data.success){
                     setDislikes(Dislikes-1)
@@ -137,7 +137,7 @@ function LikeDislikes(props) {
                 </Tooltip>
                 <span style={{paddingLeft:'8px', cursor:'auto'}}> {Likes} </span>
             </span>
-
+            &nbsp;&nbsp;
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
                     <Icon type="dislike" theme={DislikeAction==='disliked' ? 'filled':'outlined'} onClick={onDislike} />
