@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Comment, Avatar, Button, Input } from 'antd';
-import axios from 'axios';
-import { useSelector } from 'react-redux'; //redux hook
 import SingleComment from './SingleComment';
-
-const {TextArea} = Input;
 
 function ReplyComment(props) {
 

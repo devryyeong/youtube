@@ -8,7 +8,7 @@ const { Comment } = require("../models/Comment");
 
 
 router.post('/saveComment', (req, res)=>{
-    //Client에서 불러온 정보들을 모두 다 넣어줌. req.body로!!
+    //Client에서 불러온 정보들을 req.body로 모두 다 받아서 넣어줌
     const comment=new Comment(req.body)
 
     comment.save((err, comment)=>{

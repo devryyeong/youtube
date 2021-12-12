@@ -10,10 +10,10 @@ function VideoDetailPage(props) {
 
     //App.js에서 url parameter로 :videoId라고 썼기 때문
     const videoId = props.match.params.videoId
-    const variable = { videoId: videoId }
+    const variable = { videoId: videoId } //Issue
 
     const [VideoDetail, setVideoDetail] = useState([])
-    //Comments에 comment의 모든 정보가 들어있음
+    //Comments에 코멘트의 모든 정보가 들어있음
     const [Comments, setComments] = useState([])
 
 
@@ -33,7 +33,7 @@ function VideoDetailPage(props) {
             axios.post('/api/comment/getComments', variable)
             .then(response=>{
                 if(response.data.success){
-                    console.log(response.data.comments)
+                    //console.log(response.data.comments)
                     setComments(response.data.comments)
                 }else{
                     alert('댓글 정보 가져오기 실패')

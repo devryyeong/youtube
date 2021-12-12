@@ -36,9 +36,10 @@ function SingleComment(props) {
         axios.post('/api/comment/saveComment', variables)
         .then(response=>{
             if(response.data.success){
-                console.log(response.data.result);
+                //console.log(response.data.result);
                 setCommentValue('')
                 setOpenReply(false)
+                
                 //VideoDetailPage(부모)의 Comments를 수정해줘야 함
                 props.refreshFunc(response.data.result)
             }else{
