@@ -16,7 +16,8 @@ const CategoryOptions=[
     {value: 0, label: "Film & Animation"},
     {value: 1, label: "Autos & Vehicles"},
     {value: 2, label: "Music"},
-    {value: 3, label: "Pets & Animals"}
+    {value: 3, label: "Pets & Animals"},
+    {value: 4, label: "Entertainment"}
 ]
 
 function VideoUploadPage(props) {
