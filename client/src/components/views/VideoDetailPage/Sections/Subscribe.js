@@ -17,7 +17,6 @@ const Styled= {
 function Subscribe(props) {
     const [SubscribeNumber, setSubscribeNumber] = useState(0)
     const [Subscribed, setSubscribed] = useState(false)
-    console.log('초기화'+SubscribeNumber)
     
     useEffect(() => {
         let variable={userTo: props.userTo}
@@ -77,10 +76,6 @@ function Subscribe(props) {
             })
         }
     }
-    
-    //새로고침하면 초기화(?)됨ㅠㅠㅠㅠ
-    console.log('띠용'+SubscribeNumber)
-    
 
     return (
         <div>
