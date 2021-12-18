@@ -47,6 +47,7 @@ router.post('/uploadfiles', (req, res) => { //index.js를 거쳐오므로 '/api/
 });
 
 router.post('/uploadVideo', (req, res) => {
+    //모델을 사용하려면 생성한 모델의 인스턴스를 또 한 번 생성해야 함. 생성한 인스턴스를 이용하여 우리가 원하는 실제 DB작업을 수행할 수 있음
     //비디오 정보들을 저장
     const video = new Video(req.body) //client의 모든 variables가 담겨져있음
 
