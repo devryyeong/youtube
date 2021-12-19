@@ -5,5 +5,5 @@
 * Styled-components
 ---
 ## Server
-* NodeJS & Express 
+* NodeJS & ExpressJS
 * MongoDB
