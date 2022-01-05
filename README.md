@@ -7,3 +7,5 @@
 ## Server
 * NodeJS && ExpressJS
 * MongoDB
+
+# "npm run dev"
